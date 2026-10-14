@@ -1,0 +1,6 @@
+# Vercel deployment ignore
+ResQ-Route.apk
+app-debug.apk
+serve.js
+.git
+.gitignore

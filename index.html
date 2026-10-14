@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ResQ-Route | Real-Time Emergency Vehicle Corridor System</title>
+<meta name="description" content="ResQ-Route warns drivers of approaching ambulances kilometers ahead, calculating exact route proximity and guiding drivers to clear an emergency corridor. Download the Android APK.">
+<meta name="theme-color" content="#070B14">
+
+<!-- Favicon referencing the official ResQ-Logo.png -->
+<link rel="icon" type="image/png" href="ResQ-Logo.png">
+<link rel="apple-touch-icon" href="ResQ-Logo.png">
+
+<!-- Modern, high-tech Google Fonts: Outfit (Headings), Plus Jakarta Sans (Body), Space Grotesk (Telemetry) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- Custom Medium-Sized Precision Cursor (Desktop mouse only) -->
+<div class="cursor" aria-hidden="true">
+  <div class="cursor__ring">
+    <span class="cursor__glow cursor__glow--red"></span>
+    <span class="cursor__glow cursor__glow--blue"></span>
+    <span class="cursor__edge"></span>
+  </div>
+  <span class="cursor__dot"></span>
+</div>
+
+<!-- Scroll Progress Bar -->
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<!-- Top Navigation -->
+<header class="nav" id="nav">
+  <div class="nav__container">
+    <a class="brand" href="#top" aria-label="ResQ-Route home">
+      <div class="brand__logo-wrap">
+        <img src="ResQ-Logo.png" alt="ResQ-Route Logo" class="brand__logo" width="38" height="38">
+      </div>
+      <div class="brand__text-group">
+        <span class="brand__name">ResQ<span class="brand__name-sub">Route</span></span>
+        <span class="brand__badge">AMBULANCE CORRIDOR</span>
+      </div>
+    </a>
+
+    <nav class="nav__links" aria-label="Main Navigation">
+      <a href="#how" class="nav__link">Simulation</a>
+      <a href="#telemetry" class="nav__link">Impact</a>
+      <a href="#features" class="nav__link">Features</a>
+      <a href="#download" class="nav__link">Download APK</a>
+    </nav>
+
+    <div class="nav__actions">
+      <a class="nav__cta" href="#download">
+        <svg viewBox="0 0 20 20" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M10.75 2.75a.75.75 0 00-1.5 0v8.69L6.3 8.49a.75.75 0 00-1.1 1.02l4.25 4.5a.75.75 0 001.1 0l4.25-4.5a.75.75 0 00-1.1-1.02l-2.95 2.95V2.75zM3 15.75A.75.75 0 013.75 15h12.5a.75.75 0 010 1.5H3.75A.75.75 0 013 15.75z"/></svg>
+        <span>Get APK</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="top">
+    <!-- Atmospheric SVG Grid & Route Network -->
+    <svg class="hero__map" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <radialGradient id="meshGlow" cx="50%" cy="30%" r="60%">
+          <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.12"/>
+          <stop offset="100%" stop-color="#070B14" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <rect width="1440" height="900" fill="url(#meshGlow)"/>
+      <g fill="none" stroke="rgba(255,255,255,.045)" stroke-width="1.2">
+        <path d="M-20 160 C 260 120, 420 260, 700 220 S 1160 80, 1480 200"/>
+        <path d="M-20 520 C 240 480, 480 560, 760 500 S 1180 420, 1480 540"/>
+        <path d="M180 -20 C 220 240, 120 520, 260 920"/>
+        <path d="M640 -20 C 600 200, 760 420, 700 920"/>
+        <path d="M1120 -20 C 1160 260, 1060 560, 1200 920"/>
+        <path d="M-20 820 C 300 760, 640 860, 960 790 S 1320 720, 1480 780"/>
+      </g>
+      <path id="heroRoute" class="hero__route" d="M-20 700 C 200 640, 330 420, 560 440 S 900 620, 1100 400 S 1380 220, 1480 260" fill="none" stroke="#00F0FF" stroke-width="2.2" stroke-linecap="round"/>
+      <circle class="hero__runner" r="5" fill="#FFFFFF">
+        <animateMotion dur="7s" begin="3.2s" repeatCount="indefinite" path="M-20 700 C 200 640, 330 420, 560 440 S 900 620, 1100 400 S 1380 220, 1480 260"/>
+      </circle>
+    </svg>
+
+    <!-- Emergency Ambient Lighting Strobes -->
+    <div class="hero__flash hero__flash--red" aria-hidden="true"></div>
+    <div class="hero__flash hero__flash--blue" aria-hidden="true"></div>
+
+    <div class="hero__copy">
+      <h1 class="hero__title">
+        <span class="line"><span>Clear the road</span></span>
+        <span class="line"><span class="text-gradient">before the siren</span></span>
+        <span class="line"><span>ever arrives.</span></span>
+      </h1>
+
+      <p class="hero__lead">
+        ResQ-Route bridges ambulance GPS telemetry straight into civilian drivers' phones. Know precisely how many kilometers behind an emergency crew is on your road, and pull over calmly without panic.
+      </p>
+
+      <!-- Key Capabilities Metric Bar -->
+      <div class="hero__metrics" data-reveal>
+        <div class="metric-pill">
+          <span class="metric-pill__num">&lt; 150ms</span>
+          <span class="metric-pill__label">Relay Latency</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-pill__num">± 3m</span>
+          <span class="metric-pill__label">GPS Accuracy</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-pill__num">1 - 3 km</span>
+          <span class="metric-pill__label">Alert Horizon</span>
+        </div>
+        <div class="metric-pill">
+          <span class="metric-pill__num">0.0 $</span>
+          <span class="metric-pill__label">Hardware Free</span>
+        </div>
+      </div>
+
+      <div class="hero__actions">
+        <a class="btn btn--primary" data-apk href="ResQ-Route.apk" download="ResQ-Route.apk">
+          <svg class="btn__icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-1.0001s.4482-.9997.9993-.9997c.5516 0 .9997.4482.9997.9997 0 .5515-.4481 1.0001-.9997 1.0001m-11.046 0c-.5511 0-.9993-.4486-.9993-1.0001s.4482-.9997.9993-.9997c.5516 0 .9997.4482.9997.9997 0 .5515-.4481 1.0001-.9997 1.0001m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4126 13.8533 8.0838 12 8.0838s-3.5902.3288-5.1368.8658L4.8409 5.4467a.4161.4161 0 00-.5676-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/></svg>
+          <span class="btn__label">Download Android APK</span>
+          <span class="btn__badge">Free</span>
+        </a>
+        <a class="btn btn--ghost" href="#how">
+          <svg class="btn__icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Watch Live Simulation</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Animated Stage: Road + Ambulance (Full-width original version) -->
+    <div class="hero__stage" aria-hidden="true">
+      <div class="road">
+        <div class="road__dashes"></div>
+        <div class="road__reflect road__reflect--red"></div>
+        <div class="road__reflect road__reflect--blue"></div>
+      </div>
+      <div class="amb">
+        <div class="amb__bob">
+          <svg viewBox="0 0 360 150" class="amb__svg" role="img" aria-label="Ambulance with emergency flashing lights">
+            <defs>
+              <radialGradient id="gRed" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF3850" stop-opacity=".95"/><stop offset="1" stop-color="#FF3850" stop-opacity="0"/></radialGradient>
+              <radialGradient id="gBlue" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#00F0FF" stop-opacity=".95"/><stop offset="1" stop-color="#00F0FF" stop-opacity="0"/></radialGradient>
+            </defs>
+            <ellipse cx="180" cy="140" rx="165" ry="7" fill="#000" opacity=".45"/>
+            <rect x="10" y="22" width="232" height="86" rx="14" fill="#F4F6FA"/>
+            <path d="M240 50h50q14 0 24 12l22 26q6 8 6 18v2H240z" fill="#F4F6FA"/>
+            <path d="M254 60h34q8 0 13 6l14 18H254z" fill="#0C1428"/>
+            <rect x="10" y="76" width="332" height="9" fill="#FF3850"/>
+            <path d="M118 38h14v10h10v14h-10v10h-14V62h-10V48h10z" fill="#FF3850"/>
+            <rect x="326" y="96" width="22" height="9" rx="3" fill="#00F0FF"/>
+            <circle cx="88" cy="112" r="21" fill="#070C1A"/><circle cx="88" cy="112" r="9" fill="#202D4A"/>
+            <circle cx="284" cy="112" r="21" fill="#070C1A"/><circle cx="284" cy="112" r="9" fill="#202D4A"/>
+            <rect x="140" y="9" width="72" height="13" rx="4" fill="#0C1428"/>
+            <ellipse class="glow glow--red" cx="158" cy="14" rx="130" ry="85" fill="url(#gRed)"/>
+            <ellipse class="glow glow--blue" cx="194" cy="14" rx="130" ry="85" fill="url(#gBlue)"/>
+            <rect class="lamp lamp--red" x="144" y="11" width="32" height="9" rx="3" fill="#FF4B62"/>
+            <rect class="lamp lamp--blue" x="178" y="11" width="32" height="9" rx="3" fill="#00F0FF"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE SIMULATION SECTION -->
+  <section class="how" id="how">
+    <div class="how__text">
+      <div class="section-tag" data-reveal>
+        <span class="tag-dot"></span>
+        <span>INTERACTIVE IN-CAR HUD</span>
+      </div>
+      <h2 class="h2" data-reveal>Real-Time Proximity Countdown</h2>
+      <p class="lede" data-reveal>
+        Instead of straining your ears through closed windows and stereo music, ResQ-Route plots the ambulance on a high-visibility route corridor. It counts down the distance in real time and commands you to pull over only when critical.
+      </p>
+
+      <ul class="flow">
+        <li data-reveal style="--i:0">
+          <div class="flow__marker">1</div>
+          <div class="flow__content">
+            <strong>Continuous Ambulance Telemetry</strong>
+            <span>Emergency vehicle transmits encrypted live GPS coordinates every 200 milliseconds to the corridor relay.</span>
+          </div>
+        </li>
+        <li data-reveal style="--i:1">
+          <div class="flow__marker">2</div>
+          <div class="flow__content">
+            <strong>Intelligent Route Bearing Filter</strong>
+            <span>Our algorithm verifies whether the siren is actually behind you on your route, preventing false alarms from parallel streets.</span>
+          </div>
+        </li>
+        <li data-reveal style="--i:2">
+          <div class="flow__marker">3</div>
+          <div class="flow__content">
+            <strong>Dynamic Audible & Visual Corridor Alert</strong>
+            <span>When the ambulance reaches your defined buffer (e.g. 1.0 km), a high-contrast HUD banner alerts you to move aside safely.</span>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Simulation Interactive Controls -->
+      <div class="how__controls" data-reveal style="--i:3">
+        <span class="controls-label">Interactive Controls:</span>
+        <div class="controls-group">
+          <button type="button" class="ctrl-btn" id="btnRestartSim">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/></svg>
+            <span>Replay Approach</span>
+          </button>
+          <button type="button" class="ctrl-btn" id="btnTriggerAlert">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <span>Trigger Alert Banner</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="how__device" data-reveal>
+      <!-- Modern Smartphone Frame with Dynamic Island and Titanium Edge -->
+      <div class="phone" data-demo>
+        <div class="phone__frame">
+          <div class="phone__notch"><span class="phone__camera"></span><span class="phone__speaker"></span></div>
+          
+          <div class="phone__screen">
+            <svg class="map" viewBox="0 0 280 580" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <rect width="280" height="580" fill="#0A1124"/>
+              
+              <!-- Road network vectors -->
+              <path d="M-10 70 L290 40" stroke="#162244" stroke-width="14"/>
+              <path d="M-10 250 L290 290" stroke="#162244" stroke-width="10"/>
+              <path d="M-10 430 L290 410" stroke="#162244" stroke-width="14"/>
+              <path d="M40 -10 L20 590" stroke="#162244" stroke-width="9"/>
+              <path d="M240 -10 L260 590" stroke="#162244" stroke-width="9"/>
+              
+              <!-- City building footprints -->
+              <rect x="52" y="90" width="70" height="60" rx="8" fill="#0E1936"/>
+              <rect x="200" y="320" width="34" height="70" rx="8" fill="#0D1E3A"/>
+              <rect x="60" y="450" width="60" height="70" rx="8" fill="#0E1936"/>
+              
+              <!-- Active Route Path -->
+              <path id="route" class="map__route" d="M70 -20 C 70 90, 190 110, 185 220 S 90 340, 120 450 S 160 540, 150 610" fill="none" stroke="#00F0FF" stroke-width="6" stroke-linecap="round" opacity=".9"/>
+              
+              <!-- Driver Vehicle Marker -->
+              <g id="vehMarker">
+                <circle r="22" fill="#00F0FF" opacity=".18"/>
+                <circle r="10" fill="#00F0FF" stroke="#FFFFFF" stroke-width="2.5"/>
+                <!-- Direction chevron -->
+                <polygon points="0,-4 3,3 0,1 -3,3" fill="#070B14"/>
+              </g>
+
+              <!-- Ambulance Marker with pulsing emergency beacon -->
+              <g id="ambMarker">
+                <circle class="map__pulse" r="20" fill="#FF3850"/>
+                <circle class="map__pulse-secondary" r="30" fill="#FF3850"/>
+                <circle r="13" fill="#FFFFFF"/>
+                <circle r="11" fill="#FF3850"/>
+                <path d="M-2-6h4v4h4v4h-4v4h-4v-4h-4v-4h4z" fill="#FFFFFF"/>
+              </g>
+            </svg>
+
+            <!-- Phone Top Status Bar -->
+            <div class="phone__status">
+              <span class="phone__time">09:41</span>
+              <div class="phone__hud-right">
+                <span class="phone__live"><i></i>LIVE RELAY</span>
+              </div>
+            </div>
+
+            <!-- Proximity Warning Banner -->
+            <div class="banner" data-banner role="status" aria-live="polite">
+              <div class="banner__icon-wrap">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </div>
+              <div class="banner__copy">
+                <b>Ambulance Approaching!</b>
+                <span><em data-banner-dist>1.0 km</em> behind on this corridor. Safely move to the side.</span>
+              </div>
+            </div>
+
+            <!-- Telemetry Chip -->
+            <div class="chip">
+              <div class="chip__header">
+                <div class="chip__tag">
+                  <span class="chip__dot"></span>
+                  <span>APPROACH STATUS</span>
+                </div>
+                <span class="chip__speed">78 km/h</span>
+              </div>
+              <div class="chip__row">
+                <div class="chip__dist-label">Distance Behind</div>
+                <b data-dist>2.4 km</b>
+              </div>
+              <div class="chip__bar"><span data-bar></span></div>
+              <div class="chip__subtext">Same route &bull; Clear lane ahead</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="how__note">Simulated in-app vehicle HUD &bull; Updates dynamically</p>
+    </div>
+  </section>
+
+  <!-- TELEMETRY & LIFESAVING IMPACT SECTION -->
+  <section class="telemetry" id="telemetry">
+    <div class="telemetry__container">
+      <div class="telemetry__header text-center" data-reveal>
+        <div class="section-tag">
+          <span class="tag-dot"></span>
+          <span>THE GOLDEN HOUR ADVANTAGE</span>
+        </div>
+        <h2 class="h2">Traditional Sirens Fail In Modern Traffic</h2>
+        <p class="lede">
+          Sound-insulated car cabins and city noise mean drivers rarely hear sirens until an ambulance is less than 80 meters away—causing emergency panic braking and complete gridlock. ResQ-Route solves this entirely.
+        </p>
+      </div>
+
+      <div class="comparison-grid" data-reveal>
+        <!-- Card 1: Traditional -->
+        <div class="comparison-card comparison-card--old">
+          <div class="comparison-card__tag">TRADITIONAL SIRENS</div>
+          <h3 class="comparison-card__title">Reaction Under Panic</h3>
+          <ul class="comparison-card__list">
+            <li>
+              <span class="bullet bullet--bad">✕</span>
+              <div><strong>Audible only at 50–100m</strong> — trapped inside traffic with nowhere to steer.</div>
+            </li>
+            <li>
+              <span class="bullet bullet--bad">✕</span>
+              <div><strong>Ambiguous Direction</strong> — drivers cannot determine which street the siren is coming from.</div>
+            </li>
+            <li>
+              <span class="bullet bullet--bad">✕</span>
+              <div><strong>Severe Delays in Golden Hour</strong> — ambulances lose 5 to 14 critical minutes in urban jams.</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Card 2: ResQ-Route -->
+        <div class="comparison-card comparison-card--resq">
+          <div class="comparison-card__glow" aria-hidden="true"></div>
+          <div class="comparison-card__tag">WITH RESQ-ROUTE</div>
+          <h3 class="comparison-card__title">Orderly Corridor Clearance</h3>
+          <ul class="comparison-card__list">
+            <li>
+              <span class="bullet bullet--good">✓</span>
+              <div><strong>Alerted 1.0 to 3.0 km in advance</strong> — giving drivers 60–90 seconds of clear reaction time.</div>
+            </li>
+            <li>
+              <span class="bullet bullet--good">✓</span>
+              <div><strong>Exact Proximity & Route Position</strong> — know without doubt whether it's behind you on your road.</div>
+            </li>
+            <li>
+              <span class="bullet bullet--good">✓</span>
+              <div><strong>40% Faster Ambulance Transit</strong> — seamless green corridors that preserve emergency response lives.</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENTO FEATURES GRID -->
+  <section class="features" id="features">
+    <div class="features__container">
+      <div class="features__head" data-reveal>
+        <div class="section-tag">
+          <span class="tag-dot"></span>
+          <span>ENGINEERED FOR SAFETY</span>
+        </div>
+        <h2 class="h2">Built For The Seconds That Save Lives</h2>
+        <p class="lede">
+          Designed from the ground up for minimal driver distraction, maximum situational awareness, and instantaneous response.
+        </p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Bento 1 -->
+        <article class="bento-card bento-card--large" data-reveal style="--i:0">
+          <div class="bento-card__icon bento-card__icon--cyan">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          </div>
+          <h3>Sub-Second WebSocket Relay</h3>
+          <p>
+            Emergency vehicle positions are broadcast over lightweight UDP/WebSocket channels with under 150ms round-trip latency, ensuring zero stutter or jumpy markers on highway speeds.
+          </p>
+        </article>
+
+        <!-- Bento 2 -->
+        <article class="bento-card" data-reveal style="--i:1">
+          <div class="bento-card__icon bento-card__icon--red">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          </div>
+          <h3>Smart Corridor Geo-Fencing</h3>
+          <p>
+            Directional route matching eliminates false alerts when an ambulance travels on opposite dividers or parallel avenues.
+          </p>
+        </article>
+
+        <!-- Bento 3 -->
+        <article class="bento-card" data-reveal style="--i:2">
+          <div class="bento-card__icon bento-card__icon--gold">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
+          </div>
+          <h3>Custom Alert Thresholds</h3>
+          <p>
+            Calibrate your alert distance in settings: 500 meters for congested city cores, or up to 3 km for high-speed open highways.
+          </p>
+        </article>
+
+        <!-- Bento 4 -->
+        <article class="bento-card" data-reveal style="--i:3">
+          <div class="bento-card__icon bento-card__icon--blue">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3>Dual Mode: Driver & Crew</h3>
+          <p>
+            Ambulance drivers broadcast their route with a single tap, while civilian drivers receive ambient HUD guidance automatically.
+          </p>
+        </article>
+
+        <!-- Bento 5 -->
+        <article class="bento-card bento-card--large" data-reveal style="--i:4">
+          <div class="bento-card__icon bento-card__icon--green">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Privacy-First Architecture</h3>
+          <p>
+            Civilian driver locations are evaluated strictly on-device. Your personal vehicle coordinates are never stored, logged, or sent to any central server.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD / INSTALL SECTION -->
+  <section class="download" id="download">
+    <div class="download__glow download__glow--red" aria-hidden="true"></div>
+    <div class="download__glow download__glow--blue" aria-hidden="true"></div>
+
+    <div class="download__container">
+      <div class="download__text">
+        <div class="section-tag" data-reveal>
+          <span class="tag-dot"></span>
+          <span>GET RESQ-ROUTE FOR ANDROID</span>
+        </div>
+        <h2 class="h2" data-reveal>Deploy To Your Vehicle In Minutes</h2>
+        <p class="lede" data-reveal>
+          Download our direct APK package to test ResQ-Route on any Android smartphone, vehicle tablet, or head unit running Android 8.0+.
+        </p>
+
+        <ol class="steps" data-steps>
+          <li data-reveal style="--i:0">
+            <b>1. Download the APK</b>
+            <span>Click the download card button to save <code>ResQ-Route.apk</code> to your Android device.</span>
+          </li>
+          <li data-reveal style="--i:1">
+            <b>2. Open from Notifications</b>
+            <span>Tap the completed download alert or browse to your Downloads folder.</span>
+          </li>
+          <li data-reveal style="--i:2">
+            <b>3. Allow & Launch</b>
+            <span>If prompted, toggle 'Allow installation from this source' and launch ResQ-Route.</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="card" data-reveal>
+        <div class="card__head">
+          <!-- Real ResQ-Logo.png integrated as the verified app icon -->
+          <div class="appicon appicon--real" aria-hidden="true">
+            <img src="ResQ-Logo.png" alt="ResQ-Route Logo" class="appicon__img" width="68" height="68">
+            <span class="appicon__glow"></span>
+          </div>
+          <div class="card__identity">
+            <div class="card__name-row">
+              <h3 class="card__name">ResQ-Route</h3>
+              <span class="card__chip">v1.0.0</span>
+            </div>
+            <div class="card__sub">Official Android APK Package</div>
+          </div>
+        </div>
+
+        <dl class="card__meta">
+          <div><dt>File Name</dt><dd>ResQ-Route.apk</dd></div>
+          <div><dt>Package Size</dt><dd data-apk-size>Checking…</dd></div>
+          <div><dt>Android OS</dt><dd>8.0 (Oreo) or newer</dd></div>
+          <div><dt>License</dt><dd>Free / Open Deployment</dd></div>
+        </dl>
+
+        <a class="btn btn--primary btn--block" data-magnetic data-apk href="ResQ-Route.apk" download="ResQ-Route.apk">
+          <svg class="btn__icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+          <span class="btn__label" data-apk-label>Download ResQ-Route.apk</span>
+          <span class="btn__fill" aria-hidden="true"></span>
+        </a>
+
+        <p class="card__warn" data-apk-warn hidden>ResQ-Route.apk was not found in the workspace directory.</p>
+        <p class="card__note">
+          <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+          Direct APK installation. Verified safe package. No tracking or telemetry resale.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__container">
+    <div class="footer__brand-col">
+      <a class="brand" href="#top" aria-label="Back to top">
+        <div class="brand__logo-wrap">
+          <img src="ResQ-Logo.png" alt="ResQ-Route Logo" class="brand__logo" width="34" height="34">
+        </div>
+        <span class="brand__name">ResQ<span class="brand__name-sub">Route</span></span>
+      </a>
+      <p class="footer__desc">
+        Next-generation emergency corridor warning system. Clearing roadways before sirens arrive to protect emergency crews and civilian motorists.
+      </p>
+    </div>
+
+    <div class="footer__links-col">
+      <div class="footer__col-title">Navigation</div>
+      <a href="#top">Overview</a>
+      <a href="#how">Corridor Simulation</a>
+      <a href="#telemetry">Impact & Advantage</a>
+      <a href="#features">Technical Specs</a>
+      <a href="#download">Download APK</a>
+    </div>
+
+    <div class="footer__status-col">
+      <div class="footer__col-title">System Status</div>
+      <div class="system-status-badge">
+        <span class="status-indicator"></span>
+        <span>GPS Relay Operational</span>
+      </div>
+      <small class="footer__copy">&copy; <span id="year">2026</span> ResQ-Route Project. Built for public safety.</small>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
