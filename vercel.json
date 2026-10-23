@@ -1,6 +1,18 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/ResQ-Route.apk",
+      "destination": "https://drive.usercontent.google.com/download?id=10xREX5qFMzHCk2cRCYn7ZJUOKiuFf1nw&export=download&confirm=t",
+      "permanent": false
+    },
+    {
+      "source": "/app-debug.apk",
+      "destination": "https://drive.usercontent.google.com/download?id=10xREX5qFMzHCk2cRCYn7ZJUOKiuFf1nw&export=download&confirm=t",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

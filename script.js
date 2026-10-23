@@ -249,19 +249,11 @@
   const warnEl = $('[data-apk-warn]');
 
   // Display size
-  if (location.protocol.startsWith('http')) {
-    fetch(apkHref, { method: 'HEAD', cache: 'no-store' })
-      .then((r) => {
-        if (!r.ok) throw new Error('missing');
-        const len = Number(r.headers.get('content-length'));
-        sizeEl.textContent = len ? (len / 1048576).toFixed(1) + ' MB' : 'Ready (210 MB)';
-      })
-      .catch(() => {
-        if (sizeEl) sizeEl.textContent = 'Ready (210 MB)';
-        if (warnEl) warnEl.hidden = true; // In development/offline keep quiet
-      });
-  } else if (sizeEl) {
-    sizeEl.textContent = 'Ready to download';
+  if (sizeEl) {
+    sizeEl.textContent = '210 MB';
+  }
+  if (warnEl) {
+    warnEl.hidden = true;
   }
 
   const mainBtn = $('.card [data-apk]');
